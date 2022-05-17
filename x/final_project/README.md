@@ -13,7 +13,7 @@ The basic framework that I used is flask. In project's folder you can find:
 
 -messanger.db is a database which contains 3 tables: users (contains all information about users. There are some fields that are mandatory for filling out and some which can be filled out later, after signing up), friends (the table where all contact lists are stored by 2 foreign keys), messages (here all messages, receivers, senders, timestaps are stored).
 
--static folder where my css code is stored. Inside this folder you can also find static folder. All the pictures are situated there.
+-static folder where my css code is stored. Inside this folder you can also find images folder. All the pictures are situated there.
 
 The majority of web pages are dinamically generated. It's implemented by jinja syntax as well as JavaScript.
 For some buttons I used fetch function which allowed to send data without having page reloaded. All data received from server is in JSON format which is really convenient and uses less space.
