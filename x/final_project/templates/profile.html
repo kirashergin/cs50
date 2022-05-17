@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Messenger: Profile
+{% endblock %}
+
+{% block main %}
+    {% if name != "User" %}
+        <div class="mb-5">
+            <h1>Hello, {{ name }}</h1>
+        </div>
+    {% endif %}
+    <div class="my-5">
+        <p>Name: {{ name }}</p>
+        <form action="/profile" method="post">
+            <input class="form-control w-auto mx-auto" autocomplete="off" placeholder="New name" name="new_name" type="text">
+            <button class="btn btn-dark mt-3" type="submit">Change name</button>
+        </form>
+    </div>
+    <div class="my-5">
+        <p>Email: {{ email }}</p>
+        <form action="/profile" method="post">
+            <input class="form-control w-auto mx-auto" autocomplete="off" placeholder="New email" name="new_email" type="text">
+            <button class="btn btn-dark mt-3" type="submit">Change email</button>
+        </form>
+    </div>
+    <div class="my-5">
+        <p>Phone: {{ phone }}</p>
+        <form action="/profile" method="post">
+            <input class="form-control w-auto mx-auto" autocomplete="off" placeholder="New phone number" name="new_phone" type="text">
+            <button class="btn btn-dark mt-3" type="submit">Change phone</button>
+        </form>
+    </div>
+    <div class="my-5">
+        <p>Sex: {{ sex }}</p>
+        <form action="/profile" method="post">
+            {% for gender in genders %}
+                <input name="new_sex" type="radio" value="{{ gender }}"> {{ gender }}
+            {% endfor %}
+            <br>
+            <button class="btn btn-dark mt-3" type="submit">Change sex</button>
+        </form>
+    </div>
+    <div class="my-5">
+        <form action="/profile" method="post">
+            <input class="form-control mx-auto w-auto mb-3" autocomplete="off" placeholder="Old password" name="old_password" type="password">
+            <input class="form-control mx-auto w-auto" autocomplete="off" placeholder="New password" name="new_password" type="password">
+            <button class="btn btn-dark mt-3" type="submit">Change password</button>
+        </form>
+    </div>
+    <div class="my-5">
+        <p>Registration date: {{ reg }}</p>
+    </div>
+{% endblock %}

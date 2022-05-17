@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Messenger
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            {% if friends %}
+            <h3>My friends:</h3>
+            <hr class="mb-0">
+            {% for friend in friends %}
+                <div id="{{ friend['id'] }}" class="person-dialogue">
+                    <p class="mb-0 pt-2">Name: <span class="receiver_name">{{ friend["name"] }}</span></p>
+                    <p class="mb-0 pb-3">({{ friend["email"] }})</p>
+                </div>
+                <hr class="m-0">
+            {% endfor %}
+            
+        {% else %}
+            <h3>You have no contacts yet</h3>
+            <a href="/contacts">Add contacts</a>
+        {% endif %}
+        </div>
+        <div id="messages" class="col-10">
+            <h3>Choose contact to start chatting</h3>
+        </div>
+    </div>
+    <div class="row align-items-end justify-content-end">
+        <div class="col-10">
+            <div id="new_message" style="visibility: hidden;">
+                <input id="message" class="form-control w-100 mb-1" autocomplete="off" autofocus placeholder="Write a message" type="text">
+                <input id="receiver" type="hidden">
+                <button id="send" class="btn btn-dark" type="submit">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let message = document.querySelector('#message');
+    let send = document.querySelector('#send');
+    send.addEventListener('click', async function() {
+        let receiver = document.querySelector('#receiver').value;
+        let response = await fetch('/send?m=' + message.value + '&r=' + receiver);
+        let html = '<p class="text-end message_db p-2">' + message.value + '</p>';
+        document.querySelector('#messages').innerHTML += html;
+        message.value = '';
+        let dialogue = await response.json();
+    })
+
+
+    let people = document.querySelectorAll('.person-dialogue');
+    for (let person = 0; person < people.length; person++) {
+        people[person].addEventListener('click', async function() {
+            let id = people[person].id;
+            document.querySelector("#receiver").value = id;
+            let response = await fetch('/dialogue?id=' + id);
+            let dialogue = await response.json();
+            document.querySelector("#new_message").style.visibility="visible"
+            let html = '';
+            let receiver_name = people[person].getElementsByClassName("receiver_name")[0].innerHTML;
+            html += '<h3>' + receiver_name + '</h3><hr>'
+
+            for (let message in dialogue) {
+                let messages = dialogue[message].message;
+                let receiver = document.querySelector('#receiver').value;
+                if (dialogue[message].sender_id == receiver) {
+                    html += '<p class="text-start message_db mx-5 p-2">' + messages + '</p>'
+                }
+                else {
+                    html += '<p class="text-end message_db p-2">' + messages + '</p>'
+                }
+            }
+            document.querySelector('#messages').innerHTML = html;
+        })
+    }
+
+</script>
+{% endblock %}

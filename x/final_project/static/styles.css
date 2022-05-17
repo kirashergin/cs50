@@ -1,0 +1,47 @@
+ul {
+    list-style: none;
+}
+
+input {
+    color: #f8f9fa !important;
+    background-color: #212529 !important;
+    border-width: 0px !important;
+}
+
+a {
+    text-decoration:  none;
+    color: #f8f9fa !important;
+    transition : all 0.3s ease-out;
+}
+
+a:hover {
+    color: #6c757d !important;
+    transition : all 0.3s ease-out;
+}
+
+footer {
+    bottom: 0;
+}
+
+.person {
+    transition : all 0.5s ease-out;
+}
+
+.person:hover {
+    background-color: #15171a;
+    transition : all 0.5s ease-out;
+}
+
+html, body {
+    height: 100%;
+}
+
+.person-dialogue, .message_db {
+    transition : all 0.5s ease-out;
+}
+
+.person-dialogue:hover, .message_db:hover {
+    background-color: #15171a;
+    transition : all 0.5s ease-out;
+}
+

@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Messenger: Find contacts
+{% endblock %}
+
+{% block main %}
+    <div>
+        <input class="form-control mx-auto w-auto mb-5" autocomplete="off" autofocus placeholder="Find by email, name, phone" type="text">
+
+        {% if friends %}
+            <h3>My friends:</h3>
+            {% for friend in friends %}
+                <div class="person">
+                    <p>Name: {{ friend["name"] }}</p>
+                    <p>Email: {{ friend["email"] }}</p>
+                    <p>Phone: {{ friend["phone"] }}</p>
+                    <form action="/contacts" method="post" class="mb-5">
+                        <input type="hidden" value="{{ friend['id'] }}" name="id_friend">
+                        <button class="btn btn-dark" type="submit">Delete from friends</button>
+                    </form>
+                </div>
+            {% endfor %}
+            <hr>
+        {% endif %}
+
+        <ul class="container" id="ul"></ul>
+
+        <script>
+    
+            let input = document.querySelector('input');
+            input.addEventListener('input', async function() {
+                let response = await fetch('/search?q=' + input.value);
+                let people = await response.json();
+                let html = '';
+                html += '<h3>Search results:</h3>'
+                for (let person in people) {
+                    let name = people[person].name;
+                    let email = people[person].email;
+                    let phone = people[person].phone;
+                    let sex = people[person].sex;
+                    let id = people[person].id
+                    html += '<div class="person">';
+                    html += '<li>Name: ' + name + '</li>';
+                    html += '<li>Email: ' + email + '</li>';
+                    html += '<li>Phone number: ' + phone + '</li>';
+                    html += '<li class="mb-1">Sex: ' + sex + '</li>';
+                    html += '<form class="mb-5" action="/contacts" method="post"><input name="id" type="hidden" value=' + id + '>';
+                    html += '<button class="btn btn-dark" type="submit">Add to contacts</button></form>';
+                    html += '</div>'
+                }
+                document.querySelector('#ul').innerHTML = html;
+            });
+
+        </script>
+    </div>
+{% endblock %}

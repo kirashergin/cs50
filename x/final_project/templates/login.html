@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Messenger: Sign In
+{% endblock %}
+
+{% block main %}
+    <div class="my-5">
+        <h1>Sing in to start chatting</h1>
+    </div>
+    <form action="/login" method="post">
+        <div class="mb-3">
+            <input required autocomplete="off" autofocus class="form-control mx-auto w-auto" id="email" name="email" placeholder="Email" type="text">
+        </div>
+        <div class="mb-3">
+            <input required class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="btn btn-dark" type="submit">Log In</button>
+    </form>
+{% endblock %}
